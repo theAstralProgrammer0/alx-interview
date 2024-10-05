@@ -1,46 +1,27 @@
 #!/usr/bin/python3
-
-"""Prime Game Interview Question."""
-
-
-def sieve_of_eratosthenes(n):
-    """
-    Generate a list of prime numbers up to n using the Sieve
-    of Eratosthenes.
-    """
-    prime = [True] * (n + 1)
-    p = 2
-    while p * p <= n:
-        if prime[p]:
-            for i in range(p * p, n + 1, p):
-                prime[i] = False
-        p += 1
-    prime[0], prime[1] = False, False
-    return prime
-
-
-def count_primes_up_to(prime):
-    """Count the number of primes up to each index."""
-    count = 0
-    prime_count = [0] * len(prime)
-    for i in range(len(prime)):
-        if prime[i]:
-            count += 1
-        prime_count[i] = count
-    return prime_count
-
+""" Module for solving prime game question """
 
 def isWinner(x, nums):
-    """Determine who the winner of the game is."""
-    if x == 0 or x == 1:
+    """function that checks for the winner"""
+    if not nums or x < 1:
         return None
+    max_num = max(nums)
 
-    n = max(nums)
-    prime = sieve_of_eratosthenes(n)
-    prime_count = count_primes_up_to(prime)
-
-    player1 = sum(prime_count[num] % 2 == 1 for num in nums)
-
+    my_filter = [True for _ in range(max(max_num + 1, 2))]
+    for i in range(2, int(pow(max_num, 0.5)) + 1):
+        if not my_filter[i]:
+            continue
+        for j in range(i * i, max_num + 1, i):
+            my_filter[j] = False
+    my_filter[0] = my_filter[1] = False
+    y = 0
+    for i in range(len(my_filter)):
+        if my_filter[i]:
+            y += 1
+        my_filter[i] = y
+    player1 = 0
+    for x in nums:
+        player1 += my_filter[x] % 2 == 1
     if player1 * 2 == len(nums):
         return None
     if player1 * 2 > len(nums):
