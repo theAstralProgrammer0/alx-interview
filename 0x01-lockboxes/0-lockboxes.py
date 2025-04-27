@@ -1,14 +1,19 @@
+#!/usr/bin/python3
+'''This module checks to see if a list of boxes can all be opened with the keys
+   contained in each box. A box can only be opened with if the key in a box
+   matches the indices of another box
+'''
+
+
 def canUnlockAll(boxes):
     # Initialization
     keychain = []
     opened_boxes = [False for _ in range(len(boxes))]
     opened_count = 0
-    
     # Start
     keychain += boxes[0]
     opened_boxes[0] = True
     opened_count += 1
-
     # Iterate
     for k in keychain:
         if k < len(boxes) and not opened_boxes[k]:
@@ -20,4 +25,3 @@ def canUnlockAll(boxes):
     if opened_count == len(boxes):
         return True
     return False
-
