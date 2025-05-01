@@ -46,4 +46,6 @@ def minOperations(n):
         Return:
             Integer => Sum of Prime Factors
     """
+    if n <= 0:
+        return 0
     return sum(primeFactors(n))
